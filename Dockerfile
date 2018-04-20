@@ -4,16 +4,16 @@ FROM jenkins/jenkins:lts
 USER root
 
 # Remove existing (older) version of Docker from the base image
-RUN apt-get remove -y docker docker.io \
- && apt-get update \
+RUN apt-get update \
+ && apt-get remove -y docker docker.io \
  && apt-get install -y apt-transport-https \
      ca-certificates \
      curl \
      gnupg2 \
      software-properties-common
-
+ 
 # Install the newest version of Docker
-RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add - \
+RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add - \
  && add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
    $(lsb_release -cs) \
